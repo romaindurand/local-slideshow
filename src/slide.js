@@ -9,7 +9,8 @@ export class Slide extends Component {
   }
 
   componentDidMount() {
-    $('#slide img').on("load", () => {
+    this.setCurrentImage(0);
+    $('#slide img').on('load', () => {
       this.keepAspectRatio();
     });
   }
@@ -20,24 +21,25 @@ export class Slide extends Component {
 
     reader.onload = (e) => {
       console.log("reader.load");//eslint-disable-line
-      this.setState({
-        currentImage: e.target.result
-      });
+      this.renderImage(e.target.result);
     };
     reader.readAsDataURL(file);
+  }
+
+  renderImage(data) {
+    $('#slide img').attr('src', data);
   }
 
   render() {
     this.setCurrentImage(this.props.slides.currentIndex);
     return (
       <div id="slide" style={{
-        height: "100%",
-        width: "80%",
-        marginLeft: '20%',
-        textAlign: "center",
-        margin: "auto"
+        height: '100%',
+        textAlign: 'center',
+        margin: 'auto'
       }}>
-        <img src={this.state.currentImage}/>
+        <img src=""/>
+        <span>{this.props.slides.currentIndex}</span>
       </div>
     );
   }
@@ -46,7 +48,7 @@ export class Slide extends Component {
     console.log("keepAspectRatio");//eslint-disable-line
     var currentImage = $('#slide img');
     var imageRatio = currentImage.height() / currentImage.width();
-    var windowRatio = $(window).innerHeight() / ($(window).innerWidth() *0.80);
+    var windowRatio = $(window).innerHeight() / ($(window).innerWidth());
     if (imageRatio < windowRatio) {
       $('#slide img').css('height', $(window).innerWidth() * imageRatio);
       $('#slide img').css('padding-top', ($(window).innerHeight() - $(window).innerWidth() * imageRatio) / 2 + 'px');
@@ -58,5 +60,5 @@ export class Slide extends Component {
 }
 
 export default connect(
-  state => ({slides: state.slides})
+  (state) => ({slides: state.slides})
 )(Slide);

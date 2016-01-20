@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Card, CardMedia} from 'material-ui';
+import { connect } from 'react-redux';
+import { setCurrentSlide } from './actions/slides';
 
 export class Thumb extends Component{
 	constructor(props){
@@ -28,4 +30,7 @@ export class Thumb extends Component{
 	}
 }
 
-export default Thumb;
+export default connect(
+  (state) => ({slides: state.slides}),
+  {setCurrentSlide}
+)(Thumb);

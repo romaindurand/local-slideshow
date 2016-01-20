@@ -13,12 +13,12 @@ export class Slideshow extends Component {
   render() {
     return (
       <div>
-        {this.props.slides.images.length ? 
+        {this.props.slides.images.length ?
           [
           <ThumbList />,
-          <Slide /> 
+          <Slide />
           ]
-          : 
+          :
           <DropZone dropCallback={this.dropCallback.bind(this)} random={true}/>}
       </div>
     );
@@ -30,6 +30,6 @@ export class Slideshow extends Component {
 }
 
 export default connect(
-  state => ({slides: state.slides}),
+  (state) => ({slides: state.slides}),
   {setImages}
 )(Slideshow);

@@ -10,13 +10,13 @@ export class ThumbList extends Component {
 
 	render(){
 		var thumbs = this.props.slides.images.map((thumb, index) => {
-			return <Thumb image={thumb} onClick={this.props.setCurrentSlide.bind(this, index)}/>	
+			return <Thumb image={thumb} onClick={this.props.setCurrentSlide.bind(this, index)}/>
 		});
 		return (<div style={{width: '20%', height: '100%', position: 'absolute', top: 0, left: 0}}>{thumbs}</div>);
 	}
 }
 
 export default connect(
-  state => ({slides: state.slides}),
+  (state) => ({slides: state.slides}),
   {setCurrentSlide}
 )(ThumbList);

@@ -11,6 +11,6 @@ export function setCurrentSlide(slideIndex) {
 export function setImages(images){
   return {
     type: SET_IMAGES,
-    images: images
+    images
   }
 }

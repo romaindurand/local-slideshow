@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import { connect } from 'react-redux';
+import { nextSlide, previousSlide } from './actions/slides';
 
 export class Slide extends Component {
   constructor(props) {
@@ -9,13 +10,32 @@ export class Slide extends Component {
   }
 
   componentDidMount() {
-    this.setCurrentImage(0);
+    this.loadCurrentImage(0);
     $('#slide img').on('load', () => {
       this.keepAspectRatio();
     });
+
+    $(window).keyup(function () {
+      switch(event.which) {
+        /*/
+        case 32:
+          resetTimer();
+          playing = !playing;
+        break;
+        //*/
+        case 37:
+          //resetTimer();
+          this.props.previousSlide(this.props.slides);
+        break;
+        case 39:
+          //resetTimer();
+          this.props.nextSlide(this.props.slides);
+        break;
+      }
+    }.bind(this));
   }
 
-  setCurrentImage(index){
+  loadCurrentImage(index){
     var file = this.props.slides.images[index];
     var reader = new FileReader();
 
@@ -31,7 +51,7 @@ export class Slide extends Component {
   }
 
   render() {
-    this.setCurrentImage(this.props.slides.currentIndex);
+    this.loadCurrentImage(this.props.slides.currentIndex);
     return (
       <div id="slide" style={{
         height: '100%',
@@ -60,5 +80,6 @@ export class Slide extends Component {
 }
 
 export default connect(
-  (state) => ({slides: state.slides})
+  (state) => ({slides: state.slides}),
+   {nextSlide, previousSlide}
 )(Slide);

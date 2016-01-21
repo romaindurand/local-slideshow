@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { setImages } from './actions/slides';
 import Slide from './slide';
 import DropZone from './dropzone';
-import ThumbList from './thumblist';
+import Sidebar from './sidebar';
 
 export class Slideshow extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export class Slideshow extends Component {
       <div>
         {this.props.slides.images.length ?
           [
-          <ThumbList />,
+          <Sidebar />,
           <Slide />
           ]
           :

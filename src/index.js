@@ -20,82 +20,17 @@ render(<Provider store={store}>
     </div>
   </Provider>, document.getElementById('root'));
 
-$("#dropzone").on("dragover", function(event) {
+$('#dropzone').on('dragover', function(event) {
     event.preventDefault();
     event.stopPropagation();
 });
 
-$(window).on("dragleave", function(event) {
+$(window).on('dragleave', function(event) {
     event.preventDefault();
     event.stopPropagation();
 });
 
-$(window).on("drop", function(event) {
+$(window).on('drop', function(event) {
     event.preventDefault();
     event.stopPropagation();
 });
-
-function initTimer() {
-  timerId = window.setInterval(function() {
-    if(playing) {
-      nextImage();
-    }
-  }, delay);
-}
-
-function resetTimer() {
-  window.clearTimeout(timerId);
-  initTimer();
-}
-
-function nextImage() {
-  currentIndex ++;
-  if(currentIndex > images.length -1) {
-    currentIndex = 0;
-    if(playing) {
-      images = _.shuffle(images);
-    }
-  }
-  //displayCurrentImage();
-}
-
-function previousImage() {
-  currentIndex --;
-  if(currentIndex < 0) {
-    currentIndex = images.length -1;
-  }
-  //displayCurrentImage();
-}
-
-
-
-$(window).keyup(function () {
-  // console.log(event.which); // eslint-disable-line
-  switch(event.which) {
-    case 32:
-      resetTimer();
-      playing = !playing;
-    break;
-    case 37:
-      resetTimer();
-      previousImage();
-    break;
-    case 39:
-      resetTimer();
-      nextImage();
-    break;
-
-    //mark as delete
-    case 46: //suppr
-    case 96: //numpad 0
-      deleteList.push(images[currentIndex].name);
-      console.log(deleteList);//eslint-disable-line
-      nextImage();
-    break;
-  }
-});
-
-$("#slide img").click(function () {
-  resetTimer();
-  nextImage();
-})

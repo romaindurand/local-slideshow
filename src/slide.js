@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import { connect } from 'react-redux';
-import { nextSlide, previousSlide } from './actions/slides';
+import { nextSlide, previousSlide, toggleSlideshow } from './actions/slides';
 
 export class Slide extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.timerId;
   }
 
   componentDidMount() {
@@ -16,13 +17,12 @@ export class Slide extends Component {
     });
 
     $(window).keyup(function () {
+      if (document.activeElement.tagName === 'INPUT') return;
+
       switch(event.which) {
-        /*/
         case 32:
-          resetTimer();
-          playing = !playing;
+          this.props.toggleSlideshow(this.props.slides);
         break;
-        //*/
         case 37:
           //resetTimer();
           this.props.previousSlide(this.props.slides);
@@ -50,17 +50,26 @@ export class Slide extends Component {
     $('#slide img').attr('src', data);
   }
 
+  onTimerTick() {
+    this.props.nextSlide(this.props.slides);
+  }
+
+  manageTimer(playing) {
+    window.clearInterval(this.timerId);
+    this.timerId = null;
+    if(playing) {
+      this.timerId = window.setInterval(this.onTimerTick.bind(this), this.props.slides.delay);
+    }
+  }
+
   render() {
+    this.manageTimer(this.props.slides.playing);
     this.loadCurrentImage(this.props.slides.currentIndex);
     return (
       <div id="slide" style={{
-        height: '100%',
         textAlign: 'center',
         margin: 'auto'
-      }}>
-        <img src=""/>
-        <span>{this.props.slides.currentIndex}</span>
-      </div>
+      }}><img src="" onTouchTap={this.props.nextSlide.bind(this, this.props.slides)}/></div>
     );
   }
 
@@ -81,5 +90,5 @@ export class Slide extends Component {
 
 export default connect(
   (state) => ({slides: state.slides}),
-   {nextSlide, previousSlide}
+   {nextSlide, previousSlide, toggleSlideshow}
 )(Slide);

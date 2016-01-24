@@ -5,13 +5,14 @@ export const PREVIOUS_SLIDE = 'PREVIOUS_SLIDE'
 export const PAUSE_SLIDESHOW = 'PAUSE_SLIDESHOW'
 export const RUN_SLIDESHOW = 'RUN_SLIDESHOW'
 export const SET_TIMER = 'SET_TIMER'
+export const SET_FILTER = 'SET_FILTER'
 export const TOGGLE_SLIDESHOW = 'TOGGLE_SLIDESHOW'
 
 export function setCurrentSlide(slideIndex, slides) {
   return {
     type: SET_CURRENT_SLIDE,
     currentIndex: +slideIndex || 0,
-    imagesCount: slides.images.length
+    imagesCount: slides.filtered_images.length
   }
 }
 
@@ -33,7 +34,7 @@ export function nextSlide(slides) {
   return {
     type: 'NEXT_SLIDE',
     currentIndex: slides.currentIndex,
-    imagesCount: slides.images.length
+    imagesCount: slides.filtered_images.length
   }
 }
 
@@ -41,7 +42,7 @@ export function previousSlide(slides) {
   return {
     type: 'PREVIOUS_SLIDE',
     currentIndex: slides.currentIndex,
-    imagesCount: slides.images.length
+    imagesCount: slides.filtered_images.length
   }
 }
 
@@ -61,5 +62,13 @@ export function toggleSlideshow(slides) {
   return {
     type: 'TOGGLE_SLIDESHOW',
     playing: !slides.playing
+  }
+}
+
+export function setFilter(filter, slides) {
+  return {
+    type: 'SET_FILTER',
+    images: slides.images,
+    filter
   }
 }

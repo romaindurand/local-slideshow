@@ -36,7 +36,11 @@ export class Slide extends Component {
   }
 
   loadCurrentImage(index){
-    var file = this.props.slides.images[index];
+    if (this.props.slides.filtered_images.length == 0) {
+      return;
+    }
+    
+    var file = this.props.slides.filtered_images[index];
     var reader = new FileReader();
 
     reader.onload = (e) => {

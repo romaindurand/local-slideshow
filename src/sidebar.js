@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { setCurrentSlide, setTimer, toggleSlideshow } from './actions/slides';
+import { setCurrentSlide, setTimer, toggleSlideshow, setFilter } from './actions/slides';
 import { sidebarToggle } from './actions/sidebar';
 import LeftNav from 'material-ui/lib/left-nav';
 import TextField from 'material-ui/lib/text-field';
@@ -33,6 +33,10 @@ export class Sidebar extends Component {
 		this.props.setCurrentSlide(+$('#slideIndexInput').val() -1, this.props.slides);
 	}
 
+	setFilterValue() {
+		this.props.setFilter($('#filterInput').val(), this.props.slides);
+	}
+
 	render(){
 		var paperConf = {margin: '5px', padding: '10px'};
 		var buttonToggle = this.props.slides.playing ? <AvPause /> : <AvPlayArrow />;
@@ -49,7 +53,10 @@ export class Sidebar extends Component {
 				</Paper>
 				<Paper style={paperConf}>
 					<TextField style={{width: '100px'}} id='slideIndexInput' value={this.props.slides.currentIndex+1} onChange={this.setSlideIndex.bind(this)} />
-					/ {this.props.slides.images.length}
+					/ {this.props.slides.filtered_images.length}
+				</Paper>
+				<Paper style={paperConf}>
+					<TextField style={{width: '100px'}} id='filterInput' value={this.props.slides.filter} onChange={this.setFilterValue.bind(this)} />
 				</Paper>
 			</LeftNav>);
 	}
@@ -57,5 +64,5 @@ export class Sidebar extends Component {
 
 export default connect(
   (state) => ({slides: state.slides, sidebar: state.sidebar}),
-  {setCurrentSlide, sidebarToggle, setTimer, toggleSlideshow}
+  {setCurrentSlide, sidebarToggle, setTimer, toggleSlideshow, setFilter}
 )(Sidebar);

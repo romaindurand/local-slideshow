@@ -1,12 +1,19 @@
-export const SET_CURRENT_SLIDE = 'SET_CURRENT_SLIDE'
-export const SET_IMAGES = 'SET_IMAGES'
 export const NEXT_SLIDE = 'NEXT_SLIDE'
-export const PREVIOUS_SLIDE = 'PREVIOUS_SLIDE'
 export const PAUSE_SLIDESHOW = 'PAUSE_SLIDESHOW'
+export const PREVIOUS_SLIDE = 'PREVIOUS_SLIDE'
 export const RUN_SLIDESHOW = 'RUN_SLIDESHOW'
-export const SET_TIMER = 'SET_TIMER'
+export const SET_CURRENT_SLIDE = 'SET_CURRENT_SLIDE'
 export const SET_FILTER = 'SET_FILTER'
+export const SET_IMAGES = 'SET_IMAGES'
+export const SET_TIMER = 'SET_TIMER'
+export const SHUFFLE_SLIDES = 'SHUFFLE_SLIDES'
 export const TOGGLE_SLIDESHOW = 'TOGGLE_SLIDESHOW'
+
+export function shuffleSlides() {
+  return {
+    type: SHUFFLE_SLIDES
+  }
+}
 
 export function setCurrentSlide(slideIndex, slides) {
   return {
